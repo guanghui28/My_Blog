@@ -33,7 +33,9 @@ const SignUp = () => {
 			});
 			const data = await res.json();
 
-			if (!data.success) {
+			// backend: error -> json({success:false})
+			// DON'T: !data.success
+			if (data.success === false) {
 				return setErrorMessage(data.message);
 			}
 			setFormData({

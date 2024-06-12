@@ -19,8 +19,9 @@ export const signup = async (req, res, next) => {
 	});
 
 	try {
+		//TODO: check duplicate username or email
 		await newUser.save();
-		res.status(201).json({ success: true, message: "Sign up successful" });
+		res.status(201).json({ message: "Sign up successful" });
 	} catch (error) {
 		next(error);
 	}
