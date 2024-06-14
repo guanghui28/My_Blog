@@ -1,7 +1,7 @@
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
 	getDownloadURL,
 	getStorage,
@@ -23,7 +23,7 @@ import {
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const DashProfile = () => {
-	const { currentUser } = useSelector((state) => state.user);
+	const { currentUser, loading } = useSelector((state) => state.user);
 	const [imageFile, setImageFile] = useState(null);
 	const [imageFileUrl, setImageFileUrl] = useState(null);
 	const [imageFileUpLoadingProgress, setImageFileUploadingProgress] =
@@ -231,10 +231,21 @@ const DashProfile = () => {
 					type="submit"
 					gradientDuoTone="purpleToBlue"
 					outline
-					disabled={imageFileUploading}
+					disabled={imageFileUploading || loading}
 				>
-					Update
+					{imageFileUploading || loading ? "Updating..." : "Update"}
 				</Button>
+				{currentUser.isAdmin ? (
+					<Link to="/create-post">
+						<Button
+							type="button"
+							gradientDuoTone="purpleToPink"
+							className="w-full"
+						>
+							Create a post
+						</Button>
+					</Link>
+				) : null}
 			</form>
 
 			<div className="text-red-500 flex justify-between mt-2">
