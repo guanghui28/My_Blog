@@ -40,3 +40,13 @@ body {
 .dark .post-content a {
 	color: rgb(241, 27, 27);
 }
+
+pre {
+	background-color: #f4f4f4;
+	padding: 10px;
+	border-radius: 5px;
+	overflow-x: auto;
+}
+code {
+	font-family: Consolas, "Courier New", monospace;
+}
