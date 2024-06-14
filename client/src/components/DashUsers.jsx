@@ -57,12 +57,9 @@ const DashUsers = () => {
 
 	const handleDeleteUser = async () => {
 		try {
-			const res = await fetch(
-				`/api/user/delete-user/${userIdToDelete}/${currentUser._id}`,
-				{
-					method: "DELETE",
-				}
-			);
+			const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
+				method: "DELETE",
+			});
 			const data = await res.json();
 			if (!res.ok) {
 				console.log(data.message);
