@@ -54,11 +54,13 @@ const PostPage = () => {
 						{post.category}
 					</Button>
 				</Link>
-				<img
-					src={post.image}
-					alt={post.title}
-					className="mt-10 p-3 max-h-[700px] w-full object-cover shadow-md"
-				/>
+				<div className="mx-auto">
+					<img
+						src={post.image}
+						alt={post.title}
+						className="mt-10 p-3 max-h-[700px] max-w-[700px] w-full object-cover shadow-md"
+					/>
+				</div>
 				<div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs">
 					<span className="italic">
 						{new Date(post.createdAt).toLocaleDateString()}
