@@ -1,12 +1,32 @@
 import { Alert, Button, Textarea } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Comment from "./Comment";
 
 const CommentSection = ({ postId }) => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [comment, setComment] = useState("");
+	const [commentList, setCommentList] = useState([]);
 	const [commentError, setCommentError] = useState(null);
+
+	useEffect(() => {
+		const fetchComment = async () => {
+			try {
+				const res = await fetch(`/api/comment/get-post-comments/${postId}`);
+				const data = await res.json();
+				if (!res.ok) {
+					throw new Error(data.message);
+				} else {
+					setCommentList(data.comments);
+				}
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+
+		fetchComment();
+	}, [postId]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -32,6 +52,8 @@ const CommentSection = ({ postId }) => {
 			const data = await res.json();
 			if (!res.ok) {
 				throw new Error(data.message);
+			} else {
+				setCommentList([data, ...commentList]);
 			}
 		} catch (error) {
 			setCommentError(error.message);
@@ -39,6 +61,7 @@ const CommentSection = ({ postId }) => {
 			setComment("");
 		}
 	};
+	console.log(commentList);
 	return (
 		<div className="max-w-2xl mx-auto w-full p-3">
 			{currentUser ? (
@@ -90,6 +113,21 @@ const CommentSection = ({ postId }) => {
 						</Alert>
 					)}
 				</form>
+			)}
+			{commentList?.length > 0 ? (
+				<>
+					<div className="text-sm my-5 flex items-center gap-1">
+						<p>Comments</p>
+						<div className="border border-gray-400 py-1 px-2 rounded-sm">
+							<p>{commentList.length}</p>
+						</div>
+					</div>
+					{commentList.map((commentItem) => (
+						<Comment key={commentItem._id} commentItem={commentItem} />
+					))}
+				</>
+			) : (
+				<p className="text-xl my-5">No commnets yet 🥺 .</p>
 			)}
 		</div>
 	);
