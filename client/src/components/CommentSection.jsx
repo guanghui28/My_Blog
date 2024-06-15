@@ -1,14 +1,17 @@
-import { Alert, Button, Textarea } from "flowbite-react";
+import { Alert, Button, Modal, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const CommentSection = ({ postId }) => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [comment, setComment] = useState("");
 	const [commentList, setCommentList] = useState([]);
 	const [commentError, setCommentError] = useState(null);
+	const [commentIdToDelete, setCommentIdToDelete] = useState(null);
+	const [showModal, setShowModal] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -108,6 +111,28 @@ const CommentSection = ({ postId }) => {
 		);
 	};
 
+	const handleDelete = async () => {
+		try {
+			const res = await fetch(
+				`/api/comment/delete-comment/${commentIdToDelete}`,
+				{
+					method: "DELETE",
+				}
+			);
+			const data = await res.json();
+			if (!res.ok) {
+				throw new Error(data.message);
+			}
+
+			setCommentList((prev) => prev.filter((c) => c._id !== commentIdToDelete));
+		} catch (error) {
+			console.log(error.message);
+		} finally {
+			setShowModal(false);
+			setCommentIdToDelete(null);
+		}
+	};
+
 	return (
 		<div className="max-w-2xl mx-auto w-full p-3">
 			{currentUser ? (
@@ -174,12 +199,40 @@ const CommentSection = ({ postId }) => {
 							commentItem={commentItem}
 							onLike={handleLike}
 							onEdit={handleEdit}
+							onDelete={(commentId) => {
+								setShowModal(true);
+								setCommentIdToDelete(commentId);
+							}}
 						/>
 					))}
 				</>
 			) : (
 				<p className="text-xl my-5">No commnets yet 🥺 .</p>
 			)}
+			<Modal
+				show={showModal}
+				onClose={() => setShowModal(false)}
+				popup
+				size="md"
+			>
+				<Modal.Header />
+				<Modal.Body>
+					<div className="text-center">
+						<HiOutlineExclamationCircle className="w-14 h-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+						<h3 className="mb-5 text-lg text-gray-500 dark:text-gray-300">
+							Are you sure you want to delete this comment?
+						</h3>
+						<div className="flex justify-between items-center">
+							<Button color="failure" onClick={handleDelete}>
+								Yes, I&#39;m sure
+							</Button>
+							<Button color="gray" onClick={() => setShowModal(false)}>
+								No, Cancel
+							</Button>
+						</div>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</div>
 	);
 };
