@@ -50,10 +50,14 @@ export const signin = async (req, res, next) => {
 		// generate token
 		const token = jwt.sign(
 			{ id: validUser._id, isAdmin: validUser.isAdmin },
-			process.env.JWT_SECRET_KEY
+			process.env.JWT_SECRET_KEY,
+			{
+				expiresIn: "1d",
+			}
 		);
 		res.cookie("access_token", token, {
 			httpOnly: true,
+			maxAge: 24 * 60 * 60 * 1000,
 		});
 
 		// hidden password to client
@@ -73,11 +77,15 @@ export const google = async (req, res, next) => {
 		if (user) {
 			const token = jwt.sign(
 				{ id: user._id, isAdmin: user.isAdmin },
-				process.env.JWT_SECRET_KEY
+				process.env.JWT_SECRET_KEY,
+				{
+					expiresIn: "1d",
+				}
 			);
 			const { password, ...rest } = user._doc;
 			res.cookie("access_token", token, {
 				httpOnly: true,
+				maxAge: 24 * 60 * 60 * 1000,
 			});
 			return res.status(200).json(rest);
 		} else {
@@ -98,11 +106,15 @@ export const google = async (req, res, next) => {
 			await newUser.save();
 			const token = jwt.sign(
 				{ id: newUser._id, isAdmin: newUser.isAdmin },
-				process.env.JWT_SECRET_KEY
+				process.env.JWT_SECRET_KEY,
+				{
+					expiresIn: "1d",
+				}
 			);
 			const { password, ...rest } = newUser._doc;
 			res.cookie("access_token", token, {
 				httpOnly: true,
+				maxAge: 24 * 60 * 60 * 1000,
 			});
 			return res.status(200).json(rest);
 		}
