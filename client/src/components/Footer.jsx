@@ -28,11 +28,19 @@ const FooterComponent = () => {
 						<div>
 							<Footer.Title title="About" />
 							<Footer.LinkGroup col>
-								<Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-									Something
+								<Footer.Link
+									href="/about"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Guanghui&apos;s Blog
 								</Footer.Link>
-								<Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-									Something
+								<Footer.Link
+									href="https://guanghui.vercel.app"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									My Website
 								</Footer.Link>
 							</Footer.LinkGroup>
 						</div>
