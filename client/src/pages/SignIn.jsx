@@ -58,7 +58,7 @@ const SignIn = () => {
 	};
 
 	return (
-		<div className="flex flex-col md:flex-row md:items-center p-3 max-w-3xl mx-auto gap-5">
+		<section className="flex flex-col md:flex-row md:items-center p-3 max-w-3xl mx-auto gap-5">
 			{/* TODO: fix the movement the left when has error */}
 			{/* left */}
 			<div className="flex-1">
@@ -126,7 +126,7 @@ const SignIn = () => {
 					</Alert>
 				)}
 			</div>
-		</div>
+		</section>
 	);
 };
 

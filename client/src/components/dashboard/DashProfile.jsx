@@ -193,6 +193,7 @@ const DashProfile = () => {
 				{imageFileUploadError && (
 					<Alert color="failure">{imageFileUploadError}</Alert>
 				)}
+
 				{currentUser && (
 					<>
 						<TextInput

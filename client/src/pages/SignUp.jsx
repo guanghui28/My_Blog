@@ -55,7 +55,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<div className="flex flex-col md:flex-row md:items-center p-3 max-w-3xl mx-auto gap-5">
+		<section className="flex flex-col md:flex-row md:items-center p-3 max-w-3xl mx-auto gap-5">
 			{/* left */}
 			<div className="flex-1">
 				<Link
@@ -131,7 +131,7 @@ const SignUp = () => {
 					</Alert>
 				)}
 			</div>
-		</div>
+		</section>
 	);
 };
 

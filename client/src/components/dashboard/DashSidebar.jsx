@@ -1,5 +1,4 @@
 import { Sidebar } from "flowbite-react";
-// import { useEffect, useState } from "react";
 import {
 	HiAnnotation,
 	HiArrowSmRight,
@@ -15,7 +14,6 @@ import useLogout from "../../hooks/useLogout";
 const DashSidebar = () => {
 	const { pathname } = useLocation();
 	const segment = pathname.split("/")[2];
-
 	const { signOut } = useLogout();
 	const { currentUser } = useSelector((state) => state.user);
 
