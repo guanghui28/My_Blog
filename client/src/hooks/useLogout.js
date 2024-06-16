@@ -21,7 +21,7 @@ const useLogout = () => {
 				throw new Error(data.message);
 			}
 			dispatch(signOutSuccess());
-			navigate("/sign-in");
+			navigate("/sign-in", { replace: true });
 		} catch (error) {
 			setError(error.message);
 		} finally {
