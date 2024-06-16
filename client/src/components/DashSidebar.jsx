@@ -88,6 +88,16 @@ const DashSidebar = () => {
 									Comments
 								</Sidebar.Item>
 							</Link>
+							<Link to="/dashboard?tab=statistics">
+								<Sidebar.Item
+									active={tab === "statistics"}
+									icon={HiDocumentText}
+									className="cursor-pointer"
+									as="span"
+								>
+									Statistics
+								</Sidebar.Item>
+							</Link>
 						</>
 					) : null}
 

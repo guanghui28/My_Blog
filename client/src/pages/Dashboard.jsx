@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import DashPosts from "../components/DashPosts";
 import DashUsers from "../components/DashUsers";
 import DashComment from "../components/DashComment";
+import Statistic from "../components/Statistic";
 
 const Dashboard = () => {
 	const { search } = useLocation();
@@ -31,6 +32,8 @@ const Dashboard = () => {
 			{tab === "users" && <DashUsers />}
 			{/* comments */}
 			{tab === "comments" && <DashComment />}
+			{/* statistics */}
+			{tab === "statistics" && <Statistic />}
 		</div>
 	);
 };
