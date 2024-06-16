@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StatisticCard from "./StatisticCard";
 import { Button, Table } from "flowbite-react";
 
-const Statistic = () => {
+const DashStatistic = () => {
 	const [users, setUsers] = useState([]);
 	const [comments, setComments] = useState([]);
 	const [posts, setPosts] = useState([]);
@@ -219,4 +219,4 @@ const Statistic = () => {
 	);
 };
 
-export default Statistic;
+export default DashStatistic;

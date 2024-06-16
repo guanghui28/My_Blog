@@ -7,12 +7,16 @@ import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
+import DashProfile from "./components/DashProfile";
+import DashPosts from "./components/DashPosts";
+import DashUsers from "./components/DashUsers";
+import DashComment from "./components/DashComment";
+import DashStatistic from "./components/DashStatistic";
 
 const App = () => {
 	return (
@@ -24,8 +28,12 @@ const App = () => {
 				<Route path="/about" element={<About />} />
 				<Route path="/sign-in" element={<SignIn />} />
 				<Route path="/sign-up" element={<SignUp />} />
-				<Route element={<PrivateRoute />}>
-					<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/dashboard" element={<Dashboard />}>
+					<Route index element={<DashProfile />} />
+					<Route path="posts" element={<DashPosts />} />
+					<Route path="users" element={<DashUsers />} />
+					<Route path="comments" element={<DashComment />} />
+					<Route path="statistics" element={<DashStatistic />} />
 				</Route>
 				<Route element={<AdminRoute />}>
 					<Route path="/create-post" element={<CreatePost />} />

@@ -11,7 +11,6 @@ const Header = () => {
 	const { currentUser } = useSelector((state) => state.user);
 	const { theme } = useSelector((state) => state.theme);
 	const dispatch = useDispatch();
-
 	const { signOut } = useLogout();
 
 	return (
@@ -67,7 +66,7 @@ const Header = () => {
 								{currentUser.email}
 							</span>
 						</Dropdown.Header>
-						<Link to="/dashboard?tab=profile">
+						<Link to="/dashboard">
 							<Dropdown.Item>Profile</Dropdown.Item>
 						</Link>
 						<Dropdown.Divider />

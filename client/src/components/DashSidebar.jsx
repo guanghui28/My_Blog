@@ -1,5 +1,5 @@
 import { Sidebar } from "flowbite-react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import {
 	HiAnnotation,
 	HiArrowSmRight,
@@ -13,39 +13,32 @@ import { useSelector } from "react-redux";
 import useLogout from "../hooks/useLogout";
 
 const DashSidebar = () => {
-	const { search } = useLocation();
-	const [tab, setTab] = useState("");
+	const { pathname } = useLocation();
+	const segment = pathname.split("/")[2];
+
 	const { signOut } = useLogout();
 	const { currentUser } = useSelector((state) => state.user);
-
-	useEffect(() => {
-		const urlPrams = new URLSearchParams(search);
-		const tabFromUrl = urlPrams.get("tab");
-		if (tabFromUrl) {
-			setTab(tabFromUrl);
-		}
-	}, [search]);
 
 	return (
 		<Sidebar className="w-full md:w-56">
 			<Sidebar.Items>
 				<Sidebar.ItemGroup className="flex flex-col gap-1">
-					<Link to="/dashboard?tab=profile">
+					<Link to="/dashboard">
 						<Sidebar.Item
-							active={tab === "profile"}
+							active={segment === undefined}
 							icon={HiUser}
-							label={currentUser.isAdmin ? "Admin" : "User"}
+							label={currentUser?.isAdmin ? "Admin" : "User"}
 							labelColor="dark"
 							as="span"
 						>
 							Profile
 						</Sidebar.Item>
 					</Link>
-					{currentUser.isAdmin ? (
+					{currentUser?.isAdmin ? (
 						<>
-							<Link to="/dashboard?tab=posts">
+							<Link to="/dashboard/posts">
 								<Sidebar.Item
-									active={tab === "posts"}
+									active={segment === "posts"}
 									icon={HiDocumentText}
 									className="cursor-pointer"
 									as="span"
@@ -53,9 +46,9 @@ const DashSidebar = () => {
 									Posts
 								</Sidebar.Item>
 							</Link>
-							<Link to="/dashboard?tab=users">
+							<Link to="/dashboard/users">
 								<Sidebar.Item
-									active={tab === "users"}
+									active={segment === "users"}
 									icon={HiOutlineUserGroup}
 									className="cursor-pointer"
 									as="span"
@@ -63,9 +56,9 @@ const DashSidebar = () => {
 									Users
 								</Sidebar.Item>
 							</Link>
-							<Link to="/dashboard?tab=comments">
+							<Link to="/dashboard/comments">
 								<Sidebar.Item
-									active={tab === "comments"}
+									active={segment === "comments"}
 									icon={HiAnnotation}
 									className="cursor-pointer"
 									as="span"
@@ -73,9 +66,9 @@ const DashSidebar = () => {
 									Comments
 								</Sidebar.Item>
 							</Link>
-							<Link to="/dashboard?tab=statistics">
+							<Link to="/dashboard/statistics">
 								<Sidebar.Item
-									active={tab === "statistics"}
+									active={segment === "statistics"}
 									icon={HiChartPie}
 									className="cursor-pointer"
 									as="span"

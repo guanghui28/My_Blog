@@ -18,9 +18,9 @@ import {
 	deleteUserStart,
 	deleteUserSuccess,
 	deleteUserFailure,
-	signOutSuccess,
 } from "../redux/user/userSlice";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import useLogout from "../hooks/useLogout";
 
 const DashProfile = () => {
 	const { currentUser, loading } = useSelector((state) => state.user);
@@ -34,6 +34,9 @@ const DashProfile = () => {
 	const [updateUserError, setUpdateUserError] = useState(null);
 	const [formData, setFormData] = useState({});
 	const [showModal, setShowModal] = useState(false);
+
+	// Custom hooks
+	const { signOut } = useLogout();
 
 	const imgRef = useRef(null);
 	const dispatch = useDispatch();
@@ -143,22 +146,6 @@ const DashProfile = () => {
 		}
 	};
 
-	const handleSignOut = async () => {
-		try {
-			const res = await fetch("/api/auth/signout", {
-				method: "POST",
-			});
-			const data = await res.json();
-
-			if (!res.ok) {
-				throw new Error(data.message);
-			}
-			dispatch(signOutSuccess());
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
-
 	return (
 		<div className="max-w-lg mx-auto p-3 w-full">
 			<h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -193,7 +180,7 @@ const DashProfile = () => {
 						/>
 					) : null}
 					<img
-						src={imageFileUrl ?? currentUser.profilePicture}
+						src={imageFileUrl ?? currentUser?.profilePicture}
 						alt="user"
 						className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
 							imageFileUpLoadingProgress &&
@@ -206,52 +193,56 @@ const DashProfile = () => {
 				{imageFileUploadError && (
 					<Alert color="failure">{imageFileUploadError}</Alert>
 				)}
-				<TextInput
-					type="text"
-					id="username"
-					placeholder="username"
-					defaultValue={currentUser.username}
-					onChange={handleOnChange}
-				/>
-				<TextInput
-					type="email"
-					id="email"
-					placeholder="email"
-					defaultValue={currentUser.email}
-					onChange={handleOnChange}
-				/>
-				<TextInput
-					type="password"
-					id="password"
-					placeholder="***********"
-					onChange={handleOnChange}
-				/>
-				<Button
-					type="submit"
-					gradientDuoTone="purpleToBlue"
-					outline
-					disabled={imageFileUploading || loading}
-				>
-					{imageFileUploading || loading ? "Updating..." : "Update"}
-				</Button>
-				{currentUser.isAdmin ? (
-					<Link to="/create-post">
+				{currentUser && (
+					<>
+						<TextInput
+							type="text"
+							id="username"
+							placeholder="username"
+							defaultValue={currentUser.username}
+							onChange={handleOnChange}
+						/>
+						<TextInput
+							type="email"
+							id="email"
+							placeholder="email"
+							defaultValue={currentUser.email}
+							onChange={handleOnChange}
+						/>
+						<TextInput
+							type="password"
+							id="password"
+							placeholder="***********"
+							onChange={handleOnChange}
+						/>
 						<Button
-							type="button"
-							gradientDuoTone="purpleToPink"
-							className="w-full"
+							type="submit"
+							gradientDuoTone="purpleToBlue"
+							outline
+							disabled={imageFileUploading || loading}
 						>
-							Create a post
+							{imageFileUploading || loading ? "Updating..." : "Update"}
 						</Button>
-					</Link>
-				) : null}
+						{currentUser.isAdmin && (
+							<Link to="/create-post">
+								<Button
+									type="button"
+									gradientDuoTone="purpleToPink"
+									className="w-full"
+								>
+									Create a post
+								</Button>
+							</Link>
+						)}
+					</>
+				)}
 			</form>
 
 			<div className="text-red-500 flex justify-between mt-2">
 				<span className="cursor-pointer" onClick={() => setShowModal(true)}>
 					Delete Account
 				</span>
-				<span className="cursor-pointer" onClick={handleSignOut}>
+				<span className="cursor-pointer" onClick={signOut}>
 					Sign Out
 				</span>
 			</div>
