@@ -21,6 +21,7 @@ import {
 import OnlyAdmin from "./layout/OnlyAdmin";
 import LayoutApp from "./layout/LayoutApp";
 import LayoutAuth from "./layout/LayoutAuth";
+import PageNotFound from "./pages/PageNotFound";
 
 const App = () => {
 	return (
@@ -54,6 +55,7 @@ const App = () => {
 					<Route path="/post/:postSlug" element={<PostPage />} />
 					<Route path="/projects" element={<Projects />} />
 				</Route>
+				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 		</>
 	);
