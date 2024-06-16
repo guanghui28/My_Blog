@@ -8,30 +8,14 @@ import {
 	HiUser,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
-import { signOutSuccess } from "../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import useLogout from "../hooks/useLogout";
 
 const DashSidebar = () => {
 	const { search } = useLocation();
 	const [tab, setTab] = useState("");
-	const dispatch = useDispatch();
+	const { signOut } = useLogout();
 	const { currentUser } = useSelector((state) => state.user);
-
-	const handleSignOut = async () => {
-		try {
-			const res = await fetch("/api/auth/signout", {
-				method: "POST",
-			});
-			const data = await res.json();
-
-			if (!res.ok) {
-				throw new Error(data.message);
-			}
-			dispatch(signOutSuccess());
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
 
 	useEffect(() => {
 		const urlPrams = new URLSearchParams(search);
@@ -104,7 +88,7 @@ const DashSidebar = () => {
 					<Sidebar.Item
 						icon={HiArrowSmRight}
 						className="cursor-pointer mt-auto"
-						onClick={handleSignOut}
+						onClick={signOut}
 					>
 						Sign Out
 					</Sidebar.Item>

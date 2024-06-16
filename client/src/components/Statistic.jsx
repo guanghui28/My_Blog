@@ -6,6 +6,7 @@ import {
 	HiOutlineUserGroup,
 } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Statistic = () => {
 	const [users, setUsers] = useState([]);
@@ -17,6 +18,7 @@ const Statistic = () => {
 	const [lastMonthUsers, setLastMonthUsers] = useState(0);
 	const [lastMonthPosts, setLastMonthPosts] = useState(0);
 	const [lastMonthComments, setLastMonthComments] = useState(0);
+	const navigate = useNavigate();
 	const { currentUser } = useSelector((state) => state.user);
 
 	useEffect(() => {
@@ -69,8 +71,10 @@ const Statistic = () => {
 			fetchUsers();
 			fetchPosts();
 			fetchComments();
+		} else {
+			navigate("/", { replace: true });
 		}
-	}, [currentUser.isAdmin]);
+	}, [currentUser.isAdmin, navigate]);
 
 	return (
 		<div className="p-3 md:mx-auto">
