@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../../hooks/useLogout";
 
 const DashSidebar = () => {
 	const { pathname } = useLocation();

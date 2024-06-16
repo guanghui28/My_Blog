@@ -1,22 +1,26 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
-import About from "./pages/About";
-import Dashboard from "./pages/Dashboard";
+import {
+	Home,
+	Projects,
+	SignUp,
+	SignIn,
+	About,
+	Dashboard,
+	CreatePost,
+	UpdatePost,
+	PostPage,
+} from "./pages";
+import ScrollToTop from "./components/ScrollToTop";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import {
+	DashProfile,
+	DashPosts,
+	DashUsers,
+	DashStatistic,
+	DashComment,
+} from "./components/dashboard";
 import AdminRoute from "./components/AdminRoute";
-import CreatePost from "./pages/CreatePost";
-import UpdatePost from "./pages/UpdatePost";
-import PostPage from "./pages/PostPage";
-import ScrollToTop from "./components/ScrollToTop";
-import DashProfile from "./components/DashProfile";
-import DashPosts from "./components/DashPosts";
-import DashUsers from "./components/DashUsers";
-import DashComment from "./components/DashComment";
-import DashStatistic from "./components/DashStatistic";
 
 const App = () => {
 	return (

@@ -8,7 +8,7 @@ import {
 	ref,
 	uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase";
+import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -18,9 +18,9 @@ import {
 	deleteUserStart,
 	deleteUserSuccess,
 	deleteUserFailure,
-} from "../redux/user/userSlice";
+} from "../../redux/user/userSlice";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import useLogout from "../hooks/useLogout";
+import useLogout from "../../hooks/useLogout";
 
 const DashProfile = () => {
 	const { currentUser, loading } = useSelector((state) => state.user);
