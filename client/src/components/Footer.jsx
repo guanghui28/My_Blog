@@ -47,11 +47,25 @@ const FooterComponent = () => {
 						<div>
 							<Footer.Title title="Follow Me" />
 							<Footer.LinkGroup col>
-								<Footer.Link href="#" target="_blank" rel="noopener noreferrer">
+								<Footer.Link
+									href="https://github.com/guanghui28"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									Github
 								</Footer.Link>
-								<Footer.Link href="#" target="_blank" rel="noopener noreferrer">
+								<Footer.Link
+									href="https://www.instagram.com/guanghuijs/"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									Instagram
+								</Footer.Link>
+								<Footer.Link
+									href="mailto:phamquanghuy2809@gmail.com"
+									rel="noopener noreferrer"
+								>
+									Contact me
 								</Footer.Link>
 							</Footer.LinkGroup>
 						</div>

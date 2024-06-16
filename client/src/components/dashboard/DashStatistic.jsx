@@ -188,9 +188,9 @@ const DashStatistic = () => {
 					</div>
 					<Table hoverable>
 						<Table.Head>
-							<Table.HeadCell>Post T</Table.HeadCell>
-							<Table.HeadCell>Username</Table.HeadCell>
-							<Table.HeadCell>User image</Table.HeadCell>
+							<Table.HeadCell>Post</Table.HeadCell>
+							<Table.HeadCell>Title</Table.HeadCell>
+							<Table.HeadCell>Category</Table.HeadCell>
 						</Table.Head>
 						<Table.Body>
 							{posts &&
@@ -204,7 +204,7 @@ const DashStatistic = () => {
 											<img
 												src={post.image}
 												alt={post.title}
-												className="w-14 h-10 rounded-md bg-gray-500"
+												className="min-w-[60px] min-h-[40px] rounded-md bg-gray-500 object-cover"
 											/>
 										</Table.Cell>
 										<Table.Cell className="w-96">{post.title}</Table.Cell>
