@@ -19,7 +19,7 @@ const DashPosts = () => {
 				`);
 				const data = await res.json();
 				if (!res.ok) {
-					return;
+					throw new Error(data.message);
 				}
 				setUserPosts(data.posts);
 				if (data.posts.length < 9) {
@@ -42,11 +42,12 @@ const DashPosts = () => {
 				`/api/post/get-posts?userId=${currentUser._id}&startIndex=${startIndex}`
 			);
 			const data = await res.json();
-			if (res.ok) {
-				setUserPosts((prev) => [...prev, ...data.posts]);
-				if (data.posts.length < 9) {
-					setShowMore(false);
-				}
+			if (!res.ok) {
+				throw new Error(data.message);
+			}
+			setUserPosts((prev) => [...prev, ...data.posts]);
+			if (data.posts.length < 9) {
+				setShowMore(false);
 			}
 		} catch (error) {
 			console.log(error.message);
@@ -63,14 +64,13 @@ const DashPosts = () => {
 			);
 			const data = await res.json();
 			if (!res.ok) {
-				console.log(data.message);
-			} else {
-				setUserPosts((prev) =>
-					prev.filter((post) => post._id !== postIdToDelete)
-				);
+				throw new Error(data.message);
 			}
+			setUserPosts((prev) =>
+				prev.filter((post) => post._id !== postIdToDelete)
+			);
 		} catch (error) {
-			console.log(error);
+			console.log(error.message);
 		} finally {
 			setShowModal(false);
 			setPostIdToDelete(null);

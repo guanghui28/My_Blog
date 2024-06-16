@@ -13,14 +13,13 @@ const Comment = ({ commentItem, onLike, onEdit, onDelete }) => {
 	useEffect(() => {
 		const getUser = async () => {
 			try {
-				const res = await fetch(`/api/user/${commentItem.userId}`);
+				const res = await fetch(`/api/user/get-me/${commentItem.userId}`);
 				const data = await res.json();
 
 				if (!res.ok) {
 					throw new Error(data.message);
-				} else {
-					setUser(data.user);
 				}
+				setUser(data.user);
 			} catch (error) {
 				console.log(error.message);
 			}

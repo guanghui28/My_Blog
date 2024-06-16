@@ -21,9 +21,8 @@ const CommentSection = ({ postId }) => {
 				const data = await res.json();
 				if (!res.ok) {
 					throw new Error(data.message);
-				} else {
-					setCommentList(data.comments);
 				}
+				setCommentList(data.comments);
 			} catch (error) {
 				console.log(error.message);
 			}
@@ -207,7 +206,7 @@ const CommentSection = ({ postId }) => {
 					))}
 				</>
 			) : (
-				<p className="text-xl my-5">No commnets yet 🥺 .</p>
+				<p className="text-xl my-5">No comments yet 🥺 .</p>
 			)}
 			<Modal
 				show={showModal}

@@ -1,6 +1,7 @@
 import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import {
+	HiAnnotation,
 	HiArrowSmRight,
 	HiDocumentText,
 	HiOutlineUserGroup,
@@ -24,12 +25,11 @@ const DashSidebar = () => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				console.log(data.message);
-			} else {
-				dispatch(signOutSuccess());
+				throw new Error(data.message);
 			}
+			dispatch(signOutSuccess());
 		} catch (error) {
-			console.log(error);
+			console.log(error.message);
 		}
 	};
 
@@ -57,29 +57,38 @@ const DashSidebar = () => {
 						</Sidebar.Item>
 					</Link>
 					{currentUser.isAdmin ? (
-						<Link to="/dashboard?tab=posts">
-							<Sidebar.Item
-								active={tab === "posts"}
-								icon={HiDocumentText}
-								className="cursor-pointer"
-								as="span"
-							>
-								Posts
-							</Sidebar.Item>
-						</Link>
-					) : null}
-
-					{currentUser.isAdmin ? (
-						<Link to="/dashboard?tab=users">
-							<Sidebar.Item
-								active={tab === "users"}
-								icon={HiOutlineUserGroup}
-								className="cursor-pointer"
-								as="span"
-							>
-								Users
-							</Sidebar.Item>
-						</Link>
+						<>
+							<Link to="/dashboard?tab=posts">
+								<Sidebar.Item
+									active={tab === "posts"}
+									icon={HiDocumentText}
+									className="cursor-pointer"
+									as="span"
+								>
+									Posts
+								</Sidebar.Item>
+							</Link>
+							<Link to="/dashboard?tab=users">
+								<Sidebar.Item
+									active={tab === "users"}
+									icon={HiOutlineUserGroup}
+									className="cursor-pointer"
+									as="span"
+								>
+									Users
+								</Sidebar.Item>
+							</Link>
+							<Link to="/dashboard?tab=comments">
+								<Sidebar.Item
+									active={tab === "comments"}
+									icon={HiAnnotation}
+									className="cursor-pointer"
+									as="span"
+								>
+									Comments
+								</Sidebar.Item>
+							</Link>
+						</>
 					) : null}
 
 					<Sidebar.Item

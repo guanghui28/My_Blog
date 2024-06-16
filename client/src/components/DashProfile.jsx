@@ -151,12 +151,11 @@ const DashProfile = () => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				console.log(data.message);
-			} else {
-				dispatch(signOutSuccess());
+				throw new Error(data.message);
 			}
+			dispatch(signOutSuccess());
 		} catch (error) {
-			console.log(error);
+			console.log(error.message);
 		}
 	};
 
