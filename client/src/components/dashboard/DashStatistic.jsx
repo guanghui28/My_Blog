@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
 	HiAnnotation,
+	HiClock,
 	HiDocumentText,
 	HiOutlineUserGroup,
 } from "react-icons/hi";
@@ -8,6 +9,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import StatisticCard from "./StatisticCard";
 import { Button, Table } from "flowbite-react";
+import moment from "moment";
 
 const DashStatistic = () => {
 	const [users, setUsers] = useState([]);
@@ -78,9 +80,9 @@ const DashStatistic = () => {
 	}, [currentUser.isAdmin, navigate]);
 
 	return (
-		<div className="p-3 md:mx-auto">
+		<main className="p-3 md:mx-auto">
 			{/* Statistics cards */}
-			<div className="flex flex-wrap gap-4 justify-center">
+			<div className="flex flex-wrap gap-4 justify-between">
 				{/* USERS */}
 				<StatisticCard
 					tag="users"
@@ -114,7 +116,7 @@ const DashStatistic = () => {
 			{/* TABLE */}
 			<div className="flex flex-wrap gap-4 py-3 mx-auto justify-center mt-5">
 				{/* USERS */}
-				<div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
+				<div className="flex bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Users</h1>
 						<Button outline gradientDuoTone="purpleToPink">
@@ -148,7 +150,7 @@ const DashStatistic = () => {
 					</Table>
 				</div>
 				{/* COMMENTS */}
-				<div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
+				<div className="flex flex-1 min-w-[400px] bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Comments</h1>
 						<Button outline gradientDuoTone="purpleToPink">
@@ -159,6 +161,9 @@ const DashStatistic = () => {
 						<Table.Head>
 							<Table.HeadCell>Comment Content</Table.HeadCell>
 							<Table.HeadCell>Likes</Table.HeadCell>
+							<Table.HeadCell>
+								<HiClock className="w-6 h-6" />
+							</Table.HeadCell>
 						</Table.Head>
 						<Table.Body>
 							{comments &&
@@ -168,10 +173,13 @@ const DashStatistic = () => {
 										key={comment._id}
 										className="bg-white dark:border-gray-700 dark:bg-gray-800"
 									>
-										<Table.Cell className="w-96">
+										<Table.Cell className="w-70">
 											<p className="line-clamp-2">{comment.content}</p>
 										</Table.Cell>
 										<Table.Cell>{comment.numberOfLikes}</Table.Cell>
+										<Table.Cell>
+											{moment(comment.createdAt).fromNow()}
+										</Table.Cell>
 									</Table.Row>
 								))}
 						</Table.Body>
@@ -179,7 +187,7 @@ const DashStatistic = () => {
 				</div>
 
 				{/* POSTS */}
-				<div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
+				<div className="flex flex-1 bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Posts</h1>
 						<Button outline gradientDuoTone="purpleToPink">
@@ -204,7 +212,7 @@ const DashStatistic = () => {
 											<img
 												src={post.image}
 												alt={post.title}
-												className="min-w-[60px] min-h-[40px] rounded-md bg-gray-500 object-cover"
+												className="w-14 h-10 rounded-md bg-gray-500 object-cover"
 											/>
 										</Table.Cell>
 										<Table.Cell className="w-96">{post.title}</Table.Cell>
@@ -215,7 +223,7 @@ const DashStatistic = () => {
 					</Table>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 };
 

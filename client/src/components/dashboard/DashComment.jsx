@@ -80,7 +80,7 @@ const DashComment = () => {
 	};
 
 	return (
-		<div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+		<main className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
 			{currentUser.isAdmin && comments.length > 0 ? (
 				<>
 					<Table hoverable className="shadow-md">
@@ -157,7 +157,7 @@ const DashComment = () => {
 					</div>
 				</Modal.Body>
 			</Modal>
-		</div>
+		</main>
 	);
 };
 

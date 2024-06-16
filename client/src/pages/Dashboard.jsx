@@ -6,12 +6,12 @@ const Dashboard = () => {
 	const { currentUser } = useSelector((state) => state.user);
 
 	return currentUser ? (
-		<section className="min-h-screen flex flex-col md:flex-row">
+		<div className="min-h-screen flex flex-col md:flex-row">
 			<div className="md:w-56">
 				<DashSidebar />
 			</div>
 			<Outlet />
-		</section>
+		</div>
 	) : (
 		<Navigate to="/sign-in" replace />
 	);

@@ -8,9 +8,7 @@ const LayoutApp = () => {
 		<>
 			<ScrollToTop />
 			<Header />
-			<main>
-				<Outlet />
-			</main>
+			<Outlet />
 			<Footer />
 		</>
 	);
