@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PostCard = ({ post }) => {
 	return (
-		<div className="group relative w-full border border-teal-500 hover:border-2 h-[20rem] overflow-hidden rounded-lg sm:w-[22rem] transition-all ">
+		<article className="group relative w-full border border-teal-500 hover:border-2 h-[20rem] overflow-hidden rounded-lg sm:w-[22rem] transition-all ">
 			<Link to={`/post/${post.slug}`}>
 				<img
 					src={post.image}
@@ -20,7 +20,7 @@ const PostCard = ({ post }) => {
 					Read article
 				</Link>
 			</div>
-		</div>
+		</article>
 	);
 };
 
