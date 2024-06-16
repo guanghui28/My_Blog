@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
 	HiAnnotation,
 	HiArrowSmRight,
+	HiChartPie,
 	HiDocumentText,
 	HiOutlineUserGroup,
 	HiUser,
@@ -75,7 +76,7 @@ const DashSidebar = () => {
 							<Link to="/dashboard?tab=statistics">
 								<Sidebar.Item
 									active={tab === "statistics"}
-									icon={HiDocumentText}
+									icon={HiChartPie}
 									className="cursor-pointer"
 									as="span"
 								>
