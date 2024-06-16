@@ -10,9 +10,7 @@ import {
 	UpdatePost,
 	PostPage,
 } from "./pages";
-import ScrollToTop from "./components/ScrollToTop";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+
 import {
 	DashProfile,
 	DashPosts,
@@ -20,34 +18,43 @@ import {
 	DashStatistic,
 	DashComment,
 } from "./components/dashboard";
-import AdminRoute from "./components/AdminRoute";
+import OnlyAdmin from "./layout/OnlyAdmin";
+import LayoutApp from "./layout/LayoutApp";
+import LayoutAuth from "./layout/LayoutAuth";
 
 const App = () => {
 	return (
 		<>
-			<ScrollToTop />
-			<Header />
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
-				<Route path="/sign-in" element={<SignIn />} />
-				<Route path="/sign-up" element={<SignUp />} />
-				<Route path="/dashboard" element={<Dashboard />}>
-					<Route index element={<DashProfile />} />
-					<Route path="posts" element={<DashPosts />} />
-					<Route path="users" element={<DashUsers />} />
-					<Route path="comments" element={<DashComment />} />
-					<Route path="statistics" element={<DashStatistic />} />
-				</Route>
-				<Route element={<AdminRoute />}>
-					<Route path="/create-post" element={<CreatePost />} />
-					<Route path="/update-post/:postId" element={<UpdatePost />} />
+				<Route element={<LayoutAuth />}>
+					<Route path="/sign-in" element={<SignIn />} />
+					<Route path="/sign-up" element={<SignUp />} />
 				</Route>
 
-				<Route path="/post/:postSlug" element={<PostPage />} />
-				<Route path="/projects" element={<Projects />} />
+				<Route element={<LayoutApp />}>
+					<Route path="/" element={<Home />} />
+					<Route path="/about" element={<About />} />
+
+					{/* dashboard */}
+					<Route path="/dashboard" element={<Dashboard />}>
+						<Route index element={<DashProfile />} />
+						<Route element={<OnlyAdmin />}>
+							<Route path="posts" element={<DashPosts />} />
+							<Route path="users" element={<DashUsers />} />
+							<Route path="comments" element={<DashComment />} />
+							<Route path="statistics" element={<DashStatistic />} />
+						</Route>
+					</Route>
+
+					<Route element={<OnlyAdmin />}>
+						<Route path="/create-post" element={<CreatePost />} />
+						<Route path="/update-post/:postId" element={<UpdatePost />} />
+					</Route>
+
+					<Route path="/post/:postSlug" element={<PostPage />} />
+					<Route path="/projects" element={<Projects />} />
+				</Route>
 			</Routes>
-			<Footer />
 		</>
 	);
 };
