@@ -7,6 +7,7 @@ import {
 } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import StatisticCard from "./StatisticCard";
 
 const Statistic = () => {
 	const [users, setUsers] = useState([]);
@@ -81,62 +82,33 @@ const Statistic = () => {
 			{/* TODO: COMPONENT */}
 			<div className="flex flex-wrap gap-4 justify-center">
 				{/* USERS */}
-				<div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-					<div className="flex justify-between">
-						<div className="">
-							<h3 className="text-gray-500 font-medium uppercase">
-								Total Users
-							</h3>
-							<p className="text-2xl">{totalUsers}</p>
-						</div>
+				<StatisticCard
+					tag="users"
+					icon={
 						<HiOutlineUserGroup className="bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg" />
-					</div>
-					<div className="flex gap-2 text-sm">
-						<span className="text-green-500 flex items-center">
-							<HiArrowNarrowUp />
-							{lastMonthUsers}
-						</span>
-						<div className="text-gray-500">Last month</div>
-					</div>
-				</div>
+					}
+					total={totalUsers}
+					lastMonth={lastMonthUsers}
+				/>
 				{/* POSTS */}
-				<div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-					<div className="flex justify-between">
-						<div className="">
-							<h3 className="text-gray-500 font-medium uppercase">
-								Total Posts
-							</h3>
-							<p className="text-2xl">{totalPosts}</p>
-						</div>
+
+				<StatisticCard
+					tag="posts"
+					icon={
 						<HiDocumentText className="bg-indigo-600 text-white rounded-full text-5xl p-3 shadow-lg" />
-					</div>
-					<div className="flex gap-2 text-sm">
-						<span className="text-green-500 flex items-center">
-							<HiArrowNarrowUp />
-							{lastMonthPosts}
-						</span>
-						<div className="text-gray-500">Last month</div>
-					</div>
-				</div>
+					}
+					total={totalPosts}
+					lastMonth={lastMonthPosts}
+				/>
 				{/* COMMENTS */}
-				<div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md">
-					<div className="flex justify-between">
-						<div className="">
-							<h3 className="text-gray-500 font-medium uppercase">
-								Total comments
-							</h3>
-							<p className="text-2xl">{totalComments}</p>
-						</div>
+				<StatisticCard
+					tag="comments"
+					icon={
 						<HiAnnotation className="bg-yellow-600 text-white rounded-full text-5xl p-3 shadow-lg" />
-					</div>
-					<div className="flex gap-2 text-sm">
-						<span className="text-green-500 flex items-center">
-							<HiArrowNarrowUp />
-							{lastMonthComments}
-						</span>
-						<div className="text-gray-500">Last month</div>
-					</div>
-				</div>
+					}
+					total={totalComments}
+					lastMonth={lastMonthComments}
+				/>
 			</div>
 		</div>
 	);
