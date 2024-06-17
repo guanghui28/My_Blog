@@ -12,6 +12,7 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { CATEGORIES } from "../data";
 
 const CreatePost = () => {
 	const [file, setFile] = useState(null);
@@ -107,10 +108,11 @@ const CreatePost = () => {
 							setFormData({ ...formData, category: e.target.value })
 						}
 					>
-						<option value="uncategorized">Select a category</option>
-						<option value="book">Book</option>
-						<option value="programming">Programming</option>
-						<option value="life">Life</option>
+						{CATEGORIES.map((opt) => (
+							<option key={opt.value} value={opt.value}>
+								{opt.label}
+							</option>
+						))}
 					</Select>
 				</div>
 				<div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">

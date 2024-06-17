@@ -13,6 +13,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { CATEGORIES } from "../data";
 
 const UpdatePost = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -134,10 +135,11 @@ const UpdatePost = () => {
 						}
 						value={formData.category}
 					>
-						<option value="uncategorized">Select a category</option>
-						<option value="book">Book</option>
-						<option value="programming">Programming</option>
-						<option value="life">Life</option>
+						{CATEGORIES.map((opt) => (
+							<option key={opt.value} value={opt.value}>
+								{opt.label}
+							</option>
+						))}
 					</Select>
 				</div>
 				<div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">

@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard";
 import CreatePost from "./CreatePost";
 import UpdatePost from "./UpdatePost";
 import PostPage from "./PostPage";
+import Search from "./Search";
 
 export {
 	Home,
@@ -18,4 +19,5 @@ export {
 	CreatePost,
 	UpdatePost,
 	PostPage,
+	Search,
 };

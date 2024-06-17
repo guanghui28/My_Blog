@@ -9,6 +9,7 @@ import {
 	CreatePost,
 	UpdatePost,
 	PostPage,
+	Search,
 } from "./pages";
 
 import {
@@ -37,6 +38,7 @@ const App = () => {
 					{/* PUBLIC */}
 					<Route path="/" element={<Home />} />
 					<Route path="/about" element={<About />} />
+					<Route path="/search" element={<Search />} />
 
 					{/* only user has logged in */}
 					<Route path="/dashboard" element={<Dashboard />}>
