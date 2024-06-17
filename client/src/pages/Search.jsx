@@ -1,10 +1,12 @@
-import { Select, TextInput } from "flowbite-react";
+import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CATEGORIES } from "../data";
+import PostCard from "../components/PostCard";
 
 const Search = () => {
 	const { search } = useLocation();
+	const navigate = useNavigate();
 	const [sidebarData, setSidebarData] = useState({
 		searchTerm: "",
 		sort: "desc",
@@ -13,6 +15,54 @@ const Search = () => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [showMore, setShowMore] = useState(false);
+
+	const handleChange = (e) => {
+		if (e.target.id === "searchTerm") {
+			setSidebarData((prev) => ({ ...prev, searchTerm: e.target.value }));
+		} else if (e.target.id === "sort") {
+			const sort = e.target.value || "desc";
+			setSidebarData((prev) => ({ ...prev, sort }));
+		} else if (e.target.id === "category") {
+			const category = e.target.value || "uncategorized";
+			setSidebarData((prev) => ({ ...prev, category }));
+		}
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const urlParams = new URLSearchParams();
+		urlParams.set("searchTerm", sidebarData.searchTerm);
+		urlParams.set("sort", sidebarData.sort);
+		urlParams.set("category", sidebarData.category);
+		const searchQuery = urlParams.toString();
+		navigate(`/search?${searchQuery}`);
+	};
+
+	const handleShowMore = async () => {
+		const numberOfPosts = posts.length;
+		const startIndex = numberOfPosts;
+		const urlParams = new URLSearchParams();
+		urlParams.set("startIndex", startIndex);
+		const searchQuery = urlParams.toString();
+
+		try {
+			const res = await fetch(`/api/post/get-posts?${searchQuery}`);
+			const data = await res.json();
+
+			if (!res.ok) {
+				throw new Error(data.message);
+			}
+
+			setPosts(data.posts);
+			if (data.posts.length > 9) {
+				setShowMore(true);
+			} else {
+				setShowMore(false);
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(search);
@@ -56,22 +106,10 @@ const Search = () => {
 		fetchPosts();
 	}, [search]);
 
-	const handleChange = (e) => {
-		if (e.target.id === "searchTerm") {
-			setSidebarData((prev) => ({ ...prev, searchTerm: e.target.value }));
-		} else if (e.target.id === "sort") {
-			const sort = e.target.value || "desc";
-			setSidebarData((prev) => ({ ...prev, sort }));
-		} else if (e.target.id === "category") {
-			const category = e.target.value || "uncategorized";
-			setSidebarData((prev) => ({ ...prev, category }));
-		}
-	};
-
 	return (
 		<div className="flex flex-col md:flex-row">
 			<div className="p-7 border-b md:border-r md:min-h-screen border-gray">
-				<form className="flex flex-col gap-8">
+				<form className="flex flex-col gap-8" onSubmit={handleSubmit}>
 					<div className="flex items-center gap-2">
 						<label
 							className="whitespace-nowrap font-semibold"
@@ -114,7 +152,36 @@ const Search = () => {
 							))}
 						</Select>
 					</div>
+					<Button type="submit" outline gradientDuoTone="purpleToPink">
+						Apply Filter
+					</Button>
 				</form>
+			</div>
+
+			<div className="w-full ">
+				<h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5">
+					Post Results
+				</h1>
+				<div className="p-7 flex flex-wrap gap-4">
+					{!loading && posts.length === 0 && (
+						<p className="text-xl text-slate-700 dark:text-slate-100">
+							No posts yet.
+						</p>
+					)}
+					{loading && <p className="text-xl text-slate-700">Loading...</p>}
+					{!loading &&
+						posts.length > 0 &&
+						posts.map((post) => <PostCard key={post._id} post={post} />)}
+
+					{showMore && (
+						<button
+							onClick={handleShowMore}
+							className="w-full text-teal-500 text-lg hover:underline p-7"
+						>
+							Show more
+						</button>
+					)}
+				</div>
 			</div>
 		</div>
 	);
