@@ -57,7 +57,7 @@ const DashStatistic = () => {
 
 		const fetchComments = async () => {
 			try {
-				const res = await fetch("/api/comment/get-comments?limit=5");
+				const res = await fetch("/api/comment/get-comments?limit=6");
 				const data = await res.json();
 				if (!res.ok) {
 					throw new Error(data.message);
