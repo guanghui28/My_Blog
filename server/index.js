@@ -1,12 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import { configDotenv } from "dotenv";
+import path from "path";
 import cookieParser from "cookie-parser";
+
+import job from "./utils/cron.js";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
 import commentRoutes from "./routes/comment.route.js";
-import path from "path";
 configDotenv();
 
 const __dirname = path.resolve();
@@ -19,6 +21,9 @@ mongoose
 	.catch((err) => {
 		console.log("Error when connect db: ", err.message);
 	});
+
+// sending a request every 14 minutes
+job.start();
 
 const app = express();
 
