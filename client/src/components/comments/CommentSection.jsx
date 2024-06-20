@@ -1,9 +1,9 @@
-import { Alert, Button, Modal, Textarea } from "flowbite-react";
+import { Alert, Button, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import DeleteModal from "../DeleteModal";
 
 const CommentSection = ({ postId }) => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -184,7 +184,7 @@ const CommentSection = ({ postId }) => {
 					)}
 				</form>
 			)}
-			{commentList?.length > 0 ? (
+			{commentList.length > 0 && (
 				<>
 					<div className="text-sm my-5 flex items-center gap-1">
 						<p>Comments</p>
@@ -205,33 +205,17 @@ const CommentSection = ({ postId }) => {
 						/>
 					))}
 				</>
-			) : (
+			)}
+			{commentList.length === 0 && (
 				<p className="text-xl my-5">No comments yet 🥺 .</p>
 			)}
-			<Modal
-				show={showModal}
-				onClose={() => setShowModal(false)}
-				popup
-				size="md"
-			>
-				<Modal.Header />
-				<Modal.Body>
-					<div className="text-center">
-						<HiOutlineExclamationCircle className="w-14 h-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-						<h3 className="mb-5 text-lg text-gray-500 dark:text-gray-300">
-							Are you sure you want to delete this comment?
-						</h3>
-						<div className="flex justify-between items-center">
-							<Button color="failure" onClick={handleDelete}>
-								Yes, I&#39;m sure
-							</Button>
-							<Button color="gray" onClick={() => setShowModal(false)}>
-								No, Cancel
-							</Button>
-						</div>
-					</div>
-				</Modal.Body>
-			</Modal>
+
+			<DeleteModal
+				handleClick={handleDelete}
+				objectName={"comment"}
+				showModal={showModal}
+				setShowModal={setShowModal}
+			/>
 		</div>
 	);
 };

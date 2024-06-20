@@ -1,8 +1,8 @@
-import { Button, Modal, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import DeleteModal from "../DeleteModal";
 
 const DashPosts = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -79,7 +79,7 @@ const DashPosts = () => {
 
 	return (
 		<main className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-			{currentUser.isAdmin && userPosts.length > 0 ? (
+			{currentUser.isAdmin && userPosts.length > 0 && (
 				<>
 					<Table hoverable className="shadow-md">
 						<Table.Head>
@@ -151,34 +151,14 @@ const DashPosts = () => {
 						</button>
 					)}
 				</>
-			) : (
-				<p>You have no posts</p>
 			)}
-
-			<Modal
-				show={showModal}
-				onClose={() => setShowModal(false)}
-				popup
-				size="md"
-			>
-				<Modal.Header />
-				<Modal.Body>
-					<div className="text-center">
-						<HiOutlineExclamationCircle className="w-14 h-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-						<h3 className="mb-5 text-lg text-gray-500 dark:text-gray-300">
-							Are you sure you want to delete this post?
-						</h3>
-						<div className="flex justify-between items-center">
-							<Button color="failure" onClick={handleDeletePost}>
-								Yes, I&#39;m sure
-							</Button>
-							<Button color="gray" onClick={() => setShowModal(false)}>
-								No, Cancel
-							</Button>
-						</div>
-					</div>
-				</Modal.Body>
-			</Modal>
+			{userPosts.length === 0 && <p>You have no posts yet 😓.</p>}
+			<DeleteModal
+				handleClick={handleDeletePost}
+				objectName={"post"}
+				showModal={showModal}
+				setShowModal={setShowModal}
+			/>
 		</main>
 	);
 };
