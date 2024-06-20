@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Button, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ import {
 } from "../../redux/user/userSlice";
 import useLogout from "../../hooks/useLogout";
 import DeleteModal from "../DeleteModal";
+import toast from "react-hot-toast";
 
 const DashProfile = () => {
 	const { currentUser, loading } = useSelector((state) => state.user);
@@ -28,10 +29,7 @@ const DashProfile = () => {
 	const [imageFileUrl, setImageFileUrl] = useState(null);
 	const [imageFileUpLoadingProgress, setImageFileUploadingProgress] =
 		useState(0);
-	const [imageFileUploadError, setImageFileUploadError] = useState(null);
 	const [imageFileUploading, setImageFileUploading] = useState(false);
-	const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
-	const [updateUserError, setUpdateUserError] = useState(null);
 	const [formData, setFormData] = useState({});
 	const [showModal, setShowModal] = useState(false);
 
@@ -45,7 +43,6 @@ const DashProfile = () => {
 	useEffect(() => {
 		const uploadImage = async () => {
 			setImageFileUploading(true);
-			setImageFileUploadError(null);
 			const storage = getStorage(app);
 			const fileName = new Date().getTime() + imageFile.name;
 			const storageRef = ref(storage, fileName);
@@ -58,10 +55,10 @@ const DashProfile = () => {
 					setImageFileUploadingProgress(progress.toFixed(0));
 				},
 				(error) => {
-					console.log(error);
-					setImageFileUploadError(
-						"Could not upload image (file must be less than 2 Mb"
-					);
+					if (error) {
+						toast.error("Could not upload image (file must be less than 2 Mb");
+					}
+
 					setImageFileUploadingProgress(0);
 					setImageFileUrl(null);
 					setImageFile(null);
@@ -69,6 +66,7 @@ const DashProfile = () => {
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+						toast.success("Updated profile image success!");
 						setImageFileUrl(downloadURL);
 						setFormData((prev) => ({ ...prev, profilePicture: downloadURL }));
 						setImageFileUploading(false);
@@ -96,8 +94,7 @@ const DashProfile = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (Object.keys(formData).length === 0) {
-			setUpdateUserError("No changes made");
-			return;
+			return toast.error("No change was made!");
 		}
 
 		try {
@@ -113,15 +110,13 @@ const DashProfile = () => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				dispatch(updateFailure(data.message));
-				setUpdateUserError(data.message);
-			} else {
-				dispatch(updateSuccess(data));
-				setUpdateUserSuccess("User's profile updated successfully");
+				throw new Error(data.message);
 			}
+			dispatch(updateSuccess(data));
+			toast.success("Your profile updated successfully");
 		} catch (error) {
 			dispatch(updateFailure(error.message));
-			setUpdateUserError(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -136,13 +131,14 @@ const DashProfile = () => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				dispatch(deleteUserFailure(data.message));
-			} else {
-				dispatch(deleteUserSuccess());
-				navigate("/sign-in");
+				throw new Error(data.message);
 			}
+			toast.success("Logged in successfully!");
+			dispatch(deleteUserSuccess());
+			navigate("/sign-in");
 		} catch (error) {
 			dispatch(deleteUserFailure(error.message));
+			toast.error(error.message);
 		}
 	};
 
@@ -190,9 +186,6 @@ const DashProfile = () => {
 						onClick={() => imgRef.current.click()}
 					/>
 				</div>
-				{imageFileUploadError && (
-					<Alert color="failure">{imageFileUploadError}</Alert>
-				)}
 
 				{currentUser && (
 					<>
@@ -247,18 +240,6 @@ const DashProfile = () => {
 					Sign Out
 				</span>
 			</div>
-
-			{updateUserSuccess && (
-				<Alert color="success" className="mt-5">
-					{updateUserSuccess}
-				</Alert>
-			)}
-
-			{updateUserError && (
-				<Alert color="failure" className="mt-5">
-					{updateUserError}
-				</Alert>
-			)}
 
 			<DeleteModal
 				handleClick={handleDeleteUser}

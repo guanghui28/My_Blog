@@ -3,19 +3,18 @@ import { useEffect, useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import DeleteModal from "../DeleteModal";
+import toast from "react-hot-toast";
 
 const DashUsers = () => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [users, setUsers] = useState([]);
 	const [showMore, setShowMore] = useState(true);
 	const [showModal, setShowModal] = useState(false);
-	const [error, setError] = useState(null);
 	const [userIdToDelete, setUserIdToDelete] = useState(null);
 
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
-				setError(null);
 				const res = await fetch(`
 					/api/user/get-users?sort=asc
 				`);
@@ -28,7 +27,7 @@ const DashUsers = () => {
 					setShowMore(false);
 				}
 			} catch (error) {
-				setError(error.message);
+				toast.error(error.message);
 			}
 		};
 
@@ -40,7 +39,6 @@ const DashUsers = () => {
 	const handleShowMore = async () => {
 		const startIndex = users.length;
 		try {
-			setError(null);
 			const res = await fetch(
 				`/api/user/get-users?sort=asc&startIndex=${startIndex}`
 			);
@@ -53,7 +51,7 @@ const DashUsers = () => {
 				setShowMore(false);
 			}
 		} catch (error) {
-			setError(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -67,8 +65,9 @@ const DashUsers = () => {
 				throw new Error(data.message);
 			}
 			setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
+			toast.success("Delete this user successfully!");
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.message);
 		} finally {
 			setShowModal(false);
 			setUserIdToDelete(null);
@@ -77,7 +76,7 @@ const DashUsers = () => {
 
 	return (
 		<main className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-			{currentUser.isAdmin && users.length > 0 ? (
+			{currentUser.isAdmin && users.length > 0 && (
 				<>
 					<Table hoverable className="shadow-md">
 						<Table.Head>
@@ -137,8 +136,6 @@ const DashUsers = () => {
 						</button>
 					)}
 				</>
-			) : (
-				<p>{error || "No users yet."}</p>
 			)}
 
 			<DeleteModal

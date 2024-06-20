@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Button, Table } from "flowbite-react";
+import moment from "moment";
 import {
 	HiAnnotation,
 	HiClock,
 	HiDocumentText,
 	HiOutlineUserGroup,
 } from "react-icons/hi";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
 import StatisticCard from "./StatisticCard";
-import { Button, Table } from "flowbite-react";
-import moment from "moment";
 
 const DashStatistic = () => {
 	const [users, setUsers] = useState([]);
@@ -24,6 +25,8 @@ const DashStatistic = () => {
 	const navigate = useNavigate();
 	const { currentUser } = useSelector((state) => state.user);
 
+	// todo: handle loading
+
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
@@ -36,7 +39,7 @@ const DashStatistic = () => {
 				setTotalUsers(data.totalUsers);
 				setLastMonthUsers(data.lastMonthUsers);
 			} catch (error) {
-				console.log(error.message);
+				toast.error(error.message);
 			}
 		};
 
@@ -51,7 +54,7 @@ const DashStatistic = () => {
 				setTotalPosts(data.totalPosts);
 				setLastMonthPosts(data.lastMonthPosts);
 			} catch (error) {
-				console.log(error.message);
+				toast.error(error.message);
 			}
 		};
 
@@ -66,7 +69,7 @@ const DashStatistic = () => {
 				setTotalComments(data.totalComments);
 				setLastMonthComments(data.lastMonthComments);
 			} catch (error) {
-				console.log(error.message);
+				toast.error(error.message);
 			}
 		};
 

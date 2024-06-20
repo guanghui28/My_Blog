@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import DeleteModal from "../DeleteModal";
+import toast from "react-hot-toast";
 
 const DashPosts = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -10,6 +11,8 @@ const DashPosts = () => {
 	const [showMore, setShowMore] = useState(true);
 	const [showModal, setShowModal] = useState(false);
 	const [postIdToDelete, setPostIdToDelete] = useState(null);
+
+	// todo: Handle loading
 
 	useEffect(() => {
 		const fetchPosts = async () => {
@@ -26,7 +29,7 @@ const DashPosts = () => {
 					setShowMore(false);
 				}
 			} catch (error) {
-				console.log(error);
+				toast.error(error.message);
 			}
 		};
 
@@ -50,7 +53,7 @@ const DashPosts = () => {
 				setShowMore(false);
 			}
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -70,7 +73,7 @@ const DashPosts = () => {
 				prev.filter((post) => post._id !== postIdToDelete)
 			);
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.message);
 		} finally {
 			setShowModal(false);
 			setPostIdToDelete(null);

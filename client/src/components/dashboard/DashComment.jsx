@@ -2,19 +2,20 @@ import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteModal from "../DeleteModal";
+import toast from "react-hot-toast";
 
 const DashComment = () => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [comments, setComments] = useState([]);
 	const [showMore, setShowMore] = useState(true);
 	const [showModal, setShowModal] = useState(false);
-	const [error, setError] = useState(null);
 	const [commentIdToDelete, setCommentIdToDelete] = useState(null);
+
+	// todo: handle loading
 
 	useEffect(() => {
 		const fetchComments = async () => {
 			try {
-				setError(null);
 				const res = await fetch(`
 					/api/comment/get-comments?sort=asc
 				`);
@@ -27,7 +28,7 @@ const DashComment = () => {
 					setShowMore(false);
 				}
 			} catch (error) {
-				setError(error.message);
+				toast.error(error.message);
 			}
 		};
 
@@ -39,7 +40,6 @@ const DashComment = () => {
 	const handleShowMore = async () => {
 		const startIndex = comments.length;
 		try {
-			setError(null);
 			const res = await fetch(
 				`/api/comment/get-comments?sort=asc&startIndex=${startIndex}`
 			);
@@ -53,7 +53,7 @@ const DashComment = () => {
 				setShowMore(false);
 			}
 		} catch (error) {
-			setError(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -73,7 +73,7 @@ const DashComment = () => {
 				prev.filter((user) => user._id !== commentIdToDelete)
 			);
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.message);
 		} finally {
 			setShowModal(false);
 			setCommentIdToDelete(null);
@@ -131,7 +131,6 @@ const DashComment = () => {
 					)}
 				</>
 			)}
-			{comments.length === 0 && <p>{error || "No comments yet."}</p>}
 			<DeleteModal
 				handleClick={handleDeleteComment}
 				showModal={showModal}
