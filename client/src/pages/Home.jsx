@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import toast from "react-hot-toast";
 
 const Home = () => {
 	const [posts, setPosts] = useState([]);
@@ -17,7 +18,7 @@ const Home = () => {
 				}
 				setPosts(data.posts);
 			} catch (error) {
-				console.log(error.message);
+				toast.error(error.message);
 			}
 		};
 

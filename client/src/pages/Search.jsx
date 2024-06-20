@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CATEGORIES } from "../data";
 import PostCard from "../components/PostCard";
+import toast from "react-hot-toast";
 
 const Search = () => {
 	const { search } = useLocation();
@@ -60,7 +61,7 @@ const Search = () => {
 				setShowMore(false);
 			}
 		} catch (error) {
-			console.log(error.message);
+			toast.error(error.message);
 		}
 	};
 

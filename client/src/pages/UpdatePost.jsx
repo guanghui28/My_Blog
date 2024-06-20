@@ -1,4 +1,4 @@
-import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
+import { Button, FileInput, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -14,14 +14,13 @@ import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CATEGORIES } from "../data";
+import toast from "react-hot-toast";
 
 const UpdatePost = () => {
 	const { currentUser } = useSelector((state) => state.user);
 	const [file, setFile] = useState(null);
 	const [imageUploadProgress, setImageUploadProgress] = useState(null);
-	const [imageUploadError, setImageUploadError] = useState(null);
 	const [formData, setFormData] = useState({});
-	const [publishError, setPublishError] = useState(null);
 	const { postId } = useParams();
 	const navigate = useNavigate();
 
@@ -32,24 +31,21 @@ const UpdatePost = () => {
 				const data = await res.json();
 
 				if (!res.ok) {
-					setPublishError(data.message);
-				} else {
-					setFormData(data.posts[0]);
-					setPublishError(null);
+					throw new Error(data.message);
 				}
+
+				setFormData(data.posts[0]);
 			};
 			fetchPost();
 		} catch (error) {
-			setPublishError(error.message);
+			toast.error(error.message);
 		}
 	}, [postId]);
 
 	const handleSubmit = async (e) => {
-		setPublishError(null);
 		e.preventDefault();
 		if (Object.keys(formData).length === 0) {
-			setPublishError("Please fill are the fields before publish");
-			return;
+			return toast.error("Please fill are the fields before publish");
 		}
 		try {
 			const res = await fetch(
@@ -66,23 +62,20 @@ const UpdatePost = () => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				setPublishError(data.message);
-				return;
+				throw new Error(data.message);
 			}
 
 			navigate(`/post/${data.slug}`);
 		} catch (error) {
-			setPublishError(error.message);
+			toast.error(error.message);
 		}
 	};
 
 	const handleUploadImage = async () => {
 		if (!file) {
-			setImageUploadError("Please select an image!");
-			return;
+			return toast.error("Please select an image!");
 		}
 		try {
-			setImageUploadError(null);
 			const storage = getStorage(app);
 			const fileName = new Date().getTime() + "-" + file.name;
 			const storageRef = ref(storage, fileName);
@@ -95,13 +88,14 @@ const UpdatePost = () => {
 					setImageUploadProgress(progress.toFixed(0));
 				},
 				(error) => {
-					console.log(error);
-					setImageUploadError("Image upload failed");
-					setImageUploadProgress(null);
+					if (error) {
+						toast.error("Image upload failed");
+						setImageUploadProgress(null);
+					}
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-						setImageUploadError(null);
+						toast.success("Update image successfully!");
 						setImageUploadProgress(null);
 						setFormData({ ...formData, image: downloadURL });
 					});
@@ -109,7 +103,7 @@ const UpdatePost = () => {
 			);
 		} catch (error) {
 			setImageUploadProgress(null);
-			setImageUploadError(error.message);
+			toast.error(error.message);
 		}
 	};
 
@@ -168,7 +162,7 @@ const UpdatePost = () => {
 						)}
 					</Button>
 				</div>
-				{imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
+
 				{formData.image && (
 					<img
 						src={formData.image}
@@ -176,6 +170,7 @@ const UpdatePost = () => {
 						className="w-full h-72 object-cover"
 					/>
 				)}
+
 				<ReactQuill
 					theme="snow"
 					placeholder="Write some description..."
@@ -189,7 +184,6 @@ const UpdatePost = () => {
 				<Button type="submit" gradientDuoTone="purpleToPink">
 					Update
 				</Button>
-				{publishError && <Alert color="failure">{publishError}</Alert>}
 			</form>
 		</section>
 	);

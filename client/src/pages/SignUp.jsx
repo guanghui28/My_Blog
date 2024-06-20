@@ -2,6 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
 	const [formData, setFormData] = useState({
@@ -34,19 +35,16 @@ const SignUp = () => {
 			});
 			const data = await res.json();
 
-			// backend: error -> json({success:false})
-			// DON'T: !data.success
-			if (data.success === false) {
-				return setErrorMessage(data.message);
+			if (!res.ok) {
+				throw new Error(data.message);
 			}
 			setFormData({
 				username: "",
 				email: "",
 				password: "",
 			});
-			if (res.ok) {
-				navigate("/sign-in");
-			}
+			toast.success("Registered successfully. Please Login!");
+			navigate("/sign-in");
 		} catch (error) {
 			setErrorMessage(error.message);
 		} finally {

@@ -8,6 +8,7 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
 	const [formData, setFormData] = useState({
@@ -38,20 +39,17 @@ const SignIn = () => {
 			});
 			const data = await res.json();
 
-			// backend: error -> json({success:false})
-			// DON'T: !data.success
-			if (data.success === false) {
-				return dispatch(signInFailure(data.message));
+			if (!res.ok) {
+				throw new Error(data.message);
 			}
 
-			if (res.ok) {
-				setFormData({
-					email: "",
-					password: "",
-				});
-				dispatch(signInSuccess(data));
-				navigate("/");
-			}
+			setFormData({
+				email: "",
+				password: "",
+			});
+			dispatch(signInSuccess(data));
+			toast.success("Logged in successfully!");
+			navigate("/");
 		} catch (error) {
 			dispatch(signInFailure(error.message));
 		}
