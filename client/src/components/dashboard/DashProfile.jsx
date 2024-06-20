@@ -66,7 +66,7 @@ const DashProfile = () => {
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-						toast.success("Updated profile image success!");
+						toast.success("Upload profile picture success!");
 						setImageFileUrl(downloadURL);
 						setFormData((prev) => ({ ...prev, profilePicture: downloadURL }));
 						setImageFileUploading(false);

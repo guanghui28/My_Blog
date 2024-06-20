@@ -89,13 +89,13 @@ const UpdatePost = () => {
 				},
 				(error) => {
 					if (error) {
-						toast.error("Image upload failed");
+						toast.error("Image post upload failed");
 						setImageUploadProgress(null);
 					}
 				},
 				() => {
 					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-						toast.success("Update image successfully!");
+						toast.success("Upload image post successfully!");
 						setImageUploadProgress(null);
 						setFormData({ ...formData, image: downloadURL });
 					});
