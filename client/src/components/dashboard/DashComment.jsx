@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 import MainCommentsTable from "../table/MainCommentsTable";
+import ShowMoreButton from "../ui/ShowMoreButton";
 
 const DashComment = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -89,14 +90,7 @@ const DashComment = () => {
 						setShowModal={setShowModal}
 						setCommentIdToDelete={setCommentIdToDelete}
 					/>
-					{showMore && (
-						<button
-							onClick={handleShowMore}
-							className="w-full text-teal-500 self-center text-sm py-6"
-						>
-							Show more
-						</button>
-					)}
+					{showMore && <ShowMoreButton handleShowMore={handleShowMore} />}
 				</>
 			)}
 			<DeleteModal

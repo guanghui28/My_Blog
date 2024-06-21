@@ -1,10 +1,9 @@
-import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 import MainUsersTable from "../table/MainUsersTable";
+import ShowMoreButton from "../ui/ShowMoreButton";
 
 const DashUsers = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -84,14 +83,7 @@ const DashUsers = () => {
 						setShowModal={setShowModal}
 						setUserIdToDelete={setUserIdToDelete}
 					/>
-					{showMore && (
-						<button
-							onClick={handleShowMore}
-							className="w-full text-teal-500 self-center text-sm py-6"
-						>
-							Show more
-						</button>
-					)}
+					{showMore && <ShowMoreButton handleShowMore={handleShowMore} />}
 				</>
 			)}
 

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 import MainPostsTable from "../table/MainPostsTable";
+import ShowMoreButton from "../ui/ShowMoreButton";
 
 const DashPosts = () => {
 	const { currentUser } = useSelector((state) => state.user);
@@ -90,14 +91,7 @@ const DashPosts = () => {
 						setShowModal={setShowModal}
 						setPostIdToDelete={setPostIdToDelete}
 					/>
-					{showMore && (
-						<button
-							onClick={handleShowMore}
-							className="w-full text-teal-500 self-center text-sm py-6"
-						>
-							Show more
-						</button>
-					)}
+					{showMore && <ShowMoreButton handleShowMore={handleShowMore} />}
 				</>
 			)}
 			{userPosts.length === 0 && <p>You have no posts yet 😓.</p>}

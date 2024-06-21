@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CATEGORIES } from "../data";
 import PostCard from "../components/PostCard";
 import toast from "react-hot-toast";
+import ShowMoreButton from "../components/ui/ShowMoreButton";
 
 const Search = () => {
 	const { search } = useLocation();
@@ -174,14 +175,7 @@ const Search = () => {
 						posts.length > 0 &&
 						posts.map((post) => <PostCard key={post._id} post={post} />)}
 
-					{showMore && (
-						<button
-							onClick={handleShowMore}
-							className="w-full text-teal-500 text-lg hover:underline p-7"
-						>
-							Show more
-						</button>
-					)}
+					{showMore && <ShowMoreButton handleShowMore={handleShowMore} />}
 				</div>
 			</div>
 		</div>
