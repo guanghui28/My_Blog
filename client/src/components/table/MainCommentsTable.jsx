@@ -11,8 +11,8 @@ const MainCommentsTable = ({
 				<Table.HeadCell>Date updated</Table.HeadCell>
 				<Table.HeadCell>Comment content</Table.HeadCell>
 				<Table.HeadCell>Number of likes</Table.HeadCell>
-				<Table.HeadCell>PostId</Table.HeadCell>
-				<Table.HeadCell>UserId</Table.HeadCell>
+				<Table.HeadCell>Post Id</Table.HeadCell>
+				<Table.HeadCell>User Id</Table.HeadCell>
 				<Table.HeadCell>Delete</Table.HeadCell>
 			</Table.Head>
 			<Table.Body>
@@ -26,8 +26,12 @@ const MainCommentsTable = ({
 						</Table.Cell>
 						<Table.Cell>{comment.content}</Table.Cell>
 						<Table.Cell>{comment.numberOfLikes}</Table.Cell>
-						<Table.Cell>{comment.postId}</Table.Cell>
-						<Table.Cell>{comment.userId}</Table.Cell>
+						<Table.Cell>
+							<p className="truncate">{comment.postId.slice(0, 10)}...</p>
+						</Table.Cell>
+						<Table.Cell>
+							<p className="truncate">{comment.userId.slice(0, 10)}...</p>
+						</Table.Cell>
 						<Table.Cell>
 							<span
 								onClick={() => {
