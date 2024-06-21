@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Link } from "react-router-dom";
 import CallToAction from "../components/ui/CallToAction";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import toast from "react-hot-toast";
+import ViewAllPost from "../components/ui/ViewAllPost";
 
 const Home = () => {
 	const [posts, setPosts] = useState([]);
@@ -24,6 +24,7 @@ const Home = () => {
 
 		fetchPosts();
 	}, []);
+
 	return (
 		<main>
 			<section className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
@@ -38,12 +39,7 @@ const Home = () => {
 					build my React skills
 				</p>
 				<div>
-					<Link
-						to="/search"
-						className="text-xs sm:text-sm text-teal-500 font-bold hover:underline"
-					>
-						View all posts
-					</Link>
+					<ViewAllPost />
 				</div>
 			</section>
 
@@ -60,12 +56,7 @@ const Home = () => {
 				)}
 
 				<div className="text-center">
-					<Link
-						to="/search"
-						className="text-xs sm:text-sm text-teal-500 font-bold hover:underline "
-					>
-						View all posts
-					</Link>
+					<ViewAllPost />
 				</div>
 			</section>
 
