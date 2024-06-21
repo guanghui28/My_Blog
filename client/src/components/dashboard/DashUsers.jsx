@@ -2,7 +2,7 @@ import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 
 const DashUsers = () => {

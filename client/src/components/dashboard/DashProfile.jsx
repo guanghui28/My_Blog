@@ -20,7 +20,7 @@ import {
 	deleteUserFailure,
 } from "../../redux/user/userSlice";
 import useLogout from "../../hooks/useLogout";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 
 const DashProfile = () => {

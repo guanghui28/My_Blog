@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
-import CallToAction from "../components/CallToAction";
+import CallToAction from "../components/ui/CallToAction";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import toast from "react-hot-toast";

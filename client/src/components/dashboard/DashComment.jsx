@@ -1,7 +1,7 @@
 import { Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../ui/DeleteModal";
 import toast from "react-hot-toast";
 
 const DashComment = () => {

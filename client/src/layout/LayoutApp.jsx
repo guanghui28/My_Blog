@@ -1,12 +1,13 @@
-import ScrollToTop from "../components/ScrollToTop";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const LayoutApp = () => {
+	useScrollToTop();
+
 	return (
 		<>
-			<ScrollToTop />
 			<Header />
 			<Outlet />
 			<Footer />

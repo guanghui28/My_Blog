@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import CallToAction from "../components/CallToAction";
+import CallToAction from "../components/ui/CallToAction";
 
 const Projects = () => {
 	// todo: add more project
