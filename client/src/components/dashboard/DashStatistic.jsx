@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Button, Table } from "flowbite-react";
 import moment from "moment";
 import {
 	HiAnnotation,
@@ -11,6 +9,9 @@ import {
 	HiOutlineUserGroup,
 } from "react-icons/hi";
 import StatisticCard from "./StatisticCard";
+import SeeAllButton from "../ui/SeeAllButton";
+import { Table } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const DashStatistic = () => {
 	const [users, setUsers] = useState([]);
@@ -122,9 +123,7 @@ const DashStatistic = () => {
 				<div className="flex bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Users</h1>
-						<Button outline gradientDuoTone="purpleToPink">
-							<Link to="/dashboard?tab=users">See all</Link>
-						</Button>
+						<SeeAllButton href="/dashboard/users" />
 					</div>
 					<Table hoverable>
 						<Table.Head>
@@ -156,9 +155,7 @@ const DashStatistic = () => {
 				<div className="flex flex-1 min-w-[400px] bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Comments</h1>
-						<Button outline gradientDuoTone="purpleToPink">
-							<Link to="/dashboard?tab=users">See all</Link>
-						</Button>
+						<SeeAllButton href="/dashboard/comments" />
 					</div>
 					<Table hoverable>
 						<Table.Head>
@@ -193,9 +190,7 @@ const DashStatistic = () => {
 				<div className="flex flex-1 bg-slate-50 flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
 					<div className="flex justify-between p-3 text-sm font-semibold">
 						<h1 className="text-center p-2">Recent Posts</h1>
-						<Button outline gradientDuoTone="purpleToPink">
-							<Link to="/dashboard?tab=users">See all</Link>
-						</Button>
+						<SeeAllButton href="/dashboard/posts" />
 					</div>
 					<Table hoverable>
 						<Table.Head>
